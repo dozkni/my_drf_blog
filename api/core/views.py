@@ -75,7 +75,7 @@ class RegisterView(generics.GenericAPIView):
             "message": "Пользователь успешно создан",
         })
 
-class ProfileView:
+class ProfileView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
 
