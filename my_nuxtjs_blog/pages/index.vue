@@ -27,14 +27,24 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapState } from 'vuex';
 export default {
-  async asyncData(ctx) {
-    const { data } = await axios.get(`http://127.0.0.1:8000/api/posts/`);
+  watchQuery: ['page'],
+  computed: {
+    ...mapState(['posts', 'total', 'next', 'next', 'previous', 'current_page'])
+  },
+  async fetch({store, route}) {
+    await store.dispatch('loadAllPosts', {query_page: route.query.page})
+  },
+  head() {
     return {
-      posts: data.results,
+      title: "Главная страница блога",
+      meta: [
+        { hid: "description", name: "description", content: "Это дискрипшн тут мы пишем текст не более 250 символов."},
+        { hid: "keywords", name: "keywords", content: "keyword 1, keyword 2"},
+      ]
     }
-  }
+  },
 }
 </script>
 
